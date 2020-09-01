@@ -1,0 +1,1012 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#fc6355">
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <title>Dashboard</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <style type="text/css">/* App container styles */
+    .App {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .btn {
+        background: #FFF;
+        color: #FF5240;
+        border: 2px solid #FF5240;
+        padding: 10px 45px;
+        min-width: 200px;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.3em;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .btn.inactive {
+        border-color: #738998;
+        color: #738998;
+    }
+
+    </style>
+    <style type="text/css">@-webkit-keyframes scale-fade-in {
+                               0% {
+                                   -webkit-transform: scale(0.97);
+                                   transform: scale(0.97);
+                                   opacity: 0.5;
+                               }
+                               100% {
+                                   -webkit-transform: scale(1);
+                                   transform: scale(1);
+                                   opacity: 1;
+                               }
+                           }
+
+    @keyframes scale-fade-in {
+        0% {
+            -webkit-transform: scale(0.97);
+            transform: scale(0.97);
+            opacity: 0.5;
+        }
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes scale-in {
+        0% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    @keyframes scale-in {
+        0% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    @-webkit-keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes rotate-fade-in {
+        0% {
+            opacity: 0.5;
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+    }
+
+    @keyframes rotate-fade-in {
+        0% {
+            opacity: 0.5;
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+    }
+
+
+    .detailWrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        text-align: center;
+        overflow-y: auto;
+
+    }
+
+    .detailOverlay {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background: rgba(0, 0, 0, .75);
+        background-size: cover;
+        z-index: 2;
+
+    }
+
+    .detailItem {
+
+        display: inline-block;
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate3d(-50%, -50%, 0);
+        transform: translate3d(-50%, -50%, 0);
+    }
+
+    .detailItem__image {
+        -webkit-animation: scale-fade-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        animation: scale-fade-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+
+        text-align: center;
+        position: relative;
+    }
+
+    .detailItem__image img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        max-height: 800px;
+        background: #EDF2F5;
+
+    }
+
+    .detailItem__info {
+        display: none;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .detailItem__name {
+        font-size: 200%;
+        margin-bottom: 10px;
+    }
+
+    .detailItem__description {
+        color: #aaa;
+    }
+
+    .button {
+        display: block;
+        border: 2px solid #231F20;
+        color: #231F20;
+        text-decoration: none;
+        margin: 30px auto;
+        max-width: 200px;
+        width: 80%;
+        padding: 10px 0;
+        border-radius: 20px;
+    }
+
+    .button:active {
+        opacity: 0.5;
+    }
+    </style>
+    <style type="text/css">
+        .share-button {
+            cursor: pointer;
+            background: #FFF;
+            color: #FF5240;
+            width: 52px;
+            height: 52px;
+            border-radius: 26px;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 99;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .12), 0 1px 1px 0 rgba(0, 0, 0, .24);
+            -webkit-transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            outline: none;
+            -webkit-animation: scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            -webkit-transform-origin: 100% 50%;
+            transform-origin: 100% 50%;
+        }
+
+        .share-button.open {
+            width: calc(100% - 40px);
+        }
+
+        .share-toggle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+
+        }
+
+        .share-content {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .share-input {
+            width: calc(100% - 62px);
+            margin: 0 0 0 25px;
+        }
+
+        .share-content input {
+            text-align: center;
+            background: transparent;
+            font-size: 0.8em;
+            width: 100%;
+            margin: 0;
+            padding: 16px 0;
+            height: 100%;
+            border: none;
+            outline: none;
+        }
+
+        .share-content .buttons {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        .download {
+            color: #FF5240;
+            line-height: 52px;
+            width: 52px;
+            -webkit-animation: scale-in 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: scale-in 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+
+        .share-close {
+            border-radius: 50%;
+            outline: none;
+            -webkit-animation: rotate-fade-in 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: rotate-fade-in 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }</style>
+    <style type="text/css">.button--round {
+        cursor: pointer;
+        background: #FFF;
+        color: #666;
+        width: 66px;
+        height: 66px;
+        border-radius: 33px;
+        border: none;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 99;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-size: 25px;
+        box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .12), 0 1px 1px 0 rgba(0, 0, 0, .24);
+        -webkit-transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        outline: none;
+        -webkit-animation: scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        animation: scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+
+    </style>
+    <style type="text/css">.spinner {
+        margin: -25% 0 0 -25%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        stroke: rgba(0, 0, 0, 0.3);
+        fill: rgba(0, 0, 0, 0.3);
+        -webkit-animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+        animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+    }</style>
+    <style type="text/css">.weather {
+        display: block;
+        text-align: center;
+    }
+
+    .weather__icon {
+        margin: -0.35em 0 -0.3em;
+        font-size: 6.5em;
+        display: block;
+        color: rgba(255, 255, 255, .8);
+        -webkit-animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+        animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+    }
+
+    .weather__temperature {
+        font-weight: 600;
+        font-size: 1.3em;
+    }
+
+    .weather__description {
+        display: block;
+        font-size: 0.85em;
+        padding: 0 0.1em;
+        font-weight: 200;
+        text-transform: uppercase;
+    }
+    </style>
+    <style type="text/css">.datum {
+        display: block;
+        font-size: 2em;
+        font-weight: 200;
+        -webkit-animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+        animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }</style>
+    <style type="text/css">
+        @-webkit-keyframes scale-in {
+            from {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes scale-in {
+            from {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+
+        .rss {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            display: block;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -ms-flex-pack: distribute;
+            justify-content: space-around;
+            -ms-flex-line-pack: stretch;
+            align-content: stretch;
+            -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+            font-weight: 200;
+            font-size: 0.3em;
+            -webkit-animation: scale-in 0.5s ease 0s;
+            animation: scale-in 0.5s ease 0s;
+            -webkit-transform-origin: 100% 0;
+            transform-origin: 100% 0;
+            height: 100%;
+        }
+
+        .rss__item {
+            text-align: left;
+            padding: 1em;
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -ms-flex-line-pack: center;
+            align-content: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            opacity: 0;
+            -webkit-transform: scale(0);
+            transform: scale(0);
+            -webkit-animation: scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+            animation: scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+            -webkit-transform-origin: 100% 0;
+            transform-origin: 100% 0;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
+
+        .rss__item:nth-child(2) {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s
+        }
+
+        .rss__item:nth-child(3) {
+            -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s
+        }
+
+        .rss__item:nth-child(4) {
+            -webkit-animation-delay: 0.12s;
+            animation-delay: 0.12s
+        }
+
+        .rss__item:nth-child(5) {
+            -webkit-animation-delay: 0.16s;
+            animation-delay: 0.16s
+        }
+
+        .rss__item:nth-child(2n) {
+            background: rgba(0, 0, 0, .05);
+        }
+
+        .rss__title {
+            display: block;
+            font-weight: 500;
+            font-size: 120%;
+            margin-bottom: 0.2em;
+        }
+
+        .rss__content {
+        }
+
+        .rss__created {
+            display: block;
+            font-weight: 500;
+            margin-top: 0.3em;
+        }</style>
+    <style type="text/css">.clock {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        -webkit-animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        animation: scale-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .clock .analog {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        height: 80%;
+        width: 80%;
+    }
+
+    .clock .middot {
+        fill: #FFF;
+        -webkit-filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .2));
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .2));
+    }
+
+    .clock .background {
+        stroke-width: 1px;
+        stroke: #fff;
+        fill: rgba(255, 255, 255, 0);
+    }
+
+    .clock .hour, .clock .min, .clock .sec {
+        stroke-width: 1px;
+        fill: #eee;
+        stroke: #eee;
+    }
+
+    .clock .sec {
+        stroke-width: 1px;
+        stroke: rgba(0, 0, 0, .5);
+    }
+
+    .clock .hourmark {
+        stroke-width: 0px;
+        stroke: #ccc;
+        fill: #aaa;
+    }
+
+    </style>
+    <style type="text/css">.html {
+        text-align: left;
+    }
+
+    .html table {
+        max-width: 100%;
+        margin: 0 1em;
+        font-size: 0.3em;
+        text-align: left;
+    }
+
+    .html td, .html th {
+        padding: 0.25em;
+    }
+
+
+    .html.status--success {
+        color: #aaffd0;
+    }
+
+    .html.status--alert {
+        color: pink;
+    }
+
+    .html.size--lg {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-item-align: stretch;
+        align-self: stretch;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-size: 2.75em;
+        font-weight: 100;
+    }</style>
+    <style type="text/css">.html {
+        text-align: left;
+    }
+
+
+    .html table {
+        max-width: 100%;
+        font-size: 0.3em;
+        text-align: left;
+    }
+
+    .html td, .html th {
+        padding: 0.25em;
+    }
+
+
+    .html.status--success {
+        color: #aaffd0;
+    }
+
+    .html.status--alert {
+        color: pink;
+    }
+
+    .html.size--lg {
+        font-size: 2.75em;
+        font-weight: 100;
+    }</style>
+    <style type="text/css">.chart {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-item-align: stretch;
+        align-self: stretch;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chart__title {
+        font-size: 0.7em;
+        text-align: center;
+        font-weight: 200;
+        text-transform: uppercase;
+        display: block;
+        position: absolute;
+        top: 1em;
+        left: 0;
+        right: 0;
+    }
+
+    .chart--type--area .chart__graph,
+    .chart--type--line .chart__graph {
+        height: 80%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        -webkit-box-align: end;
+        -ms-flex-align: end;
+        align-items: flex-end;
+    }
+
+
+    .chart--status--success.chart--type--line .chart__graph path {
+        stroke: #aaffd0 !important;
+    }
+
+    .chart--status--success.chart--type--area .chart__graph path {
+        fill: #aaffd0 !important;
+        stroke: none !important;
+        opacity: 0.8 !important
+    }
+    </style>
+    <style type="text/css">.widget {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0;
+        width: 25%;
+        height: 50%;
+        color: #FFF;
+        position: relative;
+        -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .widget--size-lg {
+        width: 50%;
+    }
+
+
+    @media screen and (orientation: landscape) {
+        .dashboard > .widget:nth-child(2),
+        .dashboard > .widget:nth-child(4),
+        .dashboard > .widget:nth-child(5),
+        .dashboard > .widget:nth-child(7) {
+            background: rgba(0, 0, 0, .04);
+        }
+    }
+
+    @media screen and (orientation: portrait) {
+        .widget {
+            width: 50%;
+            height: 33.33%;
+        }
+
+        .dashboard > .widget:nth-child(2),
+        .dashboard > .widget:nth-child(3),
+        .dashboard > .widget:nth-child(6),
+        .dashboard > .widget:nth-child(7) {
+            background: rgba(0, 0, 0, .04);
+        }
+
+    }</style>
+    <style type="text/css">.dashboard {
+        background: #4C6289;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        font-size: 16px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;
+        overflow: -moz-scrollbars-none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        display: -webkit-box;
+
+        display: -ms-flexbox;
+
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (min-width: 1200px) {
+        .dashboard {
+            font-size: 30px;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .dashboard {
+            font-size: 45px;
+        }
+    }
+
+    @media (min-width: 1921px) {
+        .dashboard {
+            font-size: 50px;
+        }
+    }
+
+    @media (min-width: 2400px) {
+        .dashboard {
+            font-size: 55px;
+        }
+    }</style>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, select, input {
+            font-family: 'Work Sans', sans-serif;
+        }</style>
+</head>
+<body>
+<div id="root">
+    <div data-reactroot="" class="App">
+        <button class="button--round ion-android-expand"></button>
+        <div id="dashboard" class="dashboard">
+            <div class="widget ">
+                <div class="spinner">
+                    <svg viewBox="0 0 64 64">
+                        <g fill="none" fill-rule="evenodd" stroke-width="0.5">
+                            <circle cx="32" cy="32" r="6.79155">
+                                <animate attributeName="r" begin="0s" dur="2s" values="0;24" keyTimes="0;1"
+                                         keySplines="0.1,0.2,0.3,1" calcMode="spline"
+                                         repeatCount="indefinite"></animate>
+                                <animate attributeName="stroke-opacity" begin="0s" dur="2s" values=".2;1;.2;0"
+                                         repeatCount="indefinite"></animate>
+                            </circle>
+                            <circle cx="32" cy="32" r="21.7329">
+                                <animate attributeName="r" begin="-1s" dur="2s" values="0;24" keyTimes="0;1"
+                                         keySplines="0.1,0.2,0.3,1" calcMode="spline"
+                                         repeatCount="indefinite"></animate>
+                                <animate attributeName="stroke-opacity" begin="-1s" dur="2s" values=".2;1;.2;0"
+                                         repeatCount="indefinite"></animate>
+                            </circle>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="html size--lg status--success">
+                    <div>68%</div>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="spinner">
+                    <svg viewBox="0 0 64 64">
+                        <g fill="none" fill-rule="evenodd" stroke-width="0.5">
+                            <circle cx="32" cy="32" r="6.79155">
+                                <animate attributeName="r" begin="0s" dur="2s" values="0;24" keyTimes="0;1"
+                                         keySplines="0.1,0.2,0.3,1" calcMode="spline"
+                                         repeatCount="indefinite"></animate>
+                                <animate attributeName="stroke-opacity" begin="0s" dur="2s" values=".2;1;.2;0"
+                                         repeatCount="indefinite"></animate>
+                            </circle>
+                            <circle cx="32" cy="32" r="21.7329">
+                                <animate attributeName="r" begin="-1s" dur="2s" values="0;24" keyTimes="0;1"
+                                         keySplines="0.1,0.2,0.3,1" calcMode="spline"
+                                         repeatCount="indefinite"></animate>
+                                <animate attributeName="stroke-opacity" begin="-1s" dur="2s" values=".2;1;.2;0"
+                                         repeatCount="indefinite"></animate>
+                            </circle>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="html size--undefined status--undefined">
+                    <div>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>Company</th>
+                                <th>Contact</th>
+                                <th>Country</th>
+                            </tr>
+                            <tr>
+                                <td>Alfreds Futterkiste</td>
+                                <td>Maria Anders</td>
+                                <td>Germany</td>
+                            </tr>
+                            <tr>
+                                <td>Centro comercial Moctezuma</td>
+                                <td>Francisco Chang</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>Ernst Handel</td>
+                                <td>Roland Mendel</td>
+                                <td>Austria</td>
+                            </tr>
+                            <tr>
+                                <td>Island Trading</td>
+                                <td>Helen Bennett</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>Laughing Bacchus Winecellars</td>
+                                <td>Yoshi Tannamuri</td>
+                                <td>Canada</td>
+                            </tr>
+                            <tr>
+                                <td>Magazzini Alimentari Riuniti</td>
+                                <td>Giovanni Rovelli</td>
+                                <td>Italy</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="html size--lg status--alert">
+                    <div>16.6%</div>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="datum">
+                    <div>TUE</div>
+                    <div>SEP</div>
+                    <div>1</div>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="clock">
+                    <svg class="analog" viewBox="0 0 100 100">
+                        <circle class="background" cx="50" cy="50" r="45"></circle>
+                        <rect class="hour" ry="0" rx="0" height="25" width="0.5" y="25" x="49.5"
+                              transform="rotate(112.5 50 50)"></rect>
+                        <rect class="min" ry="0" rx="0" height="35" width="0.5" y="15" x="49.5"
+                              transform="rotate(90 50 50)"></rect>
+                        <line class="sec" x1="50" y1="50.5" x2="50" y2="6" transform="rotate(30 50 50)"></line>
+                        <circle class="middot" cx="50" cy="50" r="2.5"></circle>
+                    </svg>
+                </div>
+            </div>
+            <div class="widget ">
+                <div class="weather">
+                    <div><i class="weather__icon icon ion-ios-cloud-outline"></i><span class="weather__temperature"><!-- react-text: 87 -->10.2
+                        <!-- /react-text --><!-- react-text: 88 -->°C<!-- /react-text --></span><span
+                            class="weather__description">broken clouds</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+  This HTML file is a template.
+  If you open it directly in the browser, you will see an empty page.
+
+  You can add webfonts, meta tags, or analytics to this file.
+  The build step will place the bundled scripts into the <body> tag.
+
+  To begin the development, run `npm start` in this folder.
+  To create a production bundle, use `npm run build`.
+-->
+<script type="text/javascript">
+        const elem = document.getElementById('dashboard');
+
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
+</script>
+
+</body>
+</html>
